@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_fire_wizard_form" model="ir.ui.view">
+        <field name="name">fire.wizard.form</field>
+        <field name="model">fire.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Terminate / Suspend Guard">
+                <sheet>
+                    <h2>Employment Action</h2>
+                    <group>
+                        <field name="guard_id" readonly="1"/>
+                        <field name="action_type"/>
+                        <field name="action_date"/>
+                        <field name="reason"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_confirm"
+                            string="Confirm"
+                            type="object"
+                            class="btn-danger"/>
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

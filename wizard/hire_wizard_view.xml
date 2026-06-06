@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hire_wizard_form" model="ir.ui.view">
+        <field name="name">hire.wizard.form</field>
+        <field name="model">hire.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Hire Applicant">
+                <sheet>
+                    <h2>Confirm Hiring</h2>
+                    <group>
+                        <group string="Applicant">
+                            <field name="applicant_id" readonly="1"/>
+                            <field name="site_id"/>
+                        </group>
+                        <group string="Contract">
+                            <field name="contract_start"/>
+                            <field name="contract_end"/>
+                        </group>
+                    </group>
+                    <group string="Salary">
+                        <group>
+                            <field name="basic_salary"/>
+                            <field name="house_allowance"/>
+                        </group>
+                        <group>
+                            <field name="transport_allowance"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_confirm_hire"
+                            string="Confirm Hire"
+                            type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

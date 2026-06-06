@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_security_manager" model="res.groups">
+        <field name="name">Security Manager</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+    </record>
+
+    <record id="group_security_hr" model="res.groups">
+        <field name="name">Security HR</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+    </record>
+
+    <record id="group_security_ceo" model="res.groups">
+        <field name="name">Security CEO</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+    </record>
+
+    <record id="group_security_guard" model="res.groups">
+        <field name="name">Security Guard</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+    </record>
+</odoo>

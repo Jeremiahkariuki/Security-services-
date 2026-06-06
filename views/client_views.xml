@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_security_client_list" model="ir.ui.view">
+        <field name="name">security.client.list</field>
+        <field name="model">security.client</field>
+        <field name="arch" type="xml">
+            <tree string="Clients">
+                <field name="name"/>
+                <field name="contact_person"/>
+                <field name="phone"/>
+                <field name="site_count"/>
+                <field name="status" widget="badge"
+                       decoration-success="status == 'active'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_security_client_form" model="ir.ui.view">
+        <field name="name">security.client.form</field>
+        <field name="model">security.client</field>
+        <field name="arch" type="xml">
+            <form string="Client">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Contact">
+                            <field name="contact_person"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="status"/>
+                        </group>
+                        <group string="Address">
+                            <field name="address"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Sites">
+                            <field name="site_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="location"/>
+                                    <field name="risk_level"/>
+                                    <field name="guard_count"/>
+                                    <field name="status"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_security_client" model="ir.actions.act_window">
+        <field name="name">Clients</field>
+        <field name="res_model">security.client</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

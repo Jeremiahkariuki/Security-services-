@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_security_vacancy_list" model="ir.ui.view">
+        <field name="name">security.vacancy.list</field>
+        <field name="model">security.vacancy</field>
+        <field name="arch" type="xml">
+            <tree string="Vacancies">
+                <field name="job_title"/>
+                <field name="site_id"/>
+                <field name="no_of_posts"/>
+                <field name="posted_date"/>
+                <field name="deadline"/>
+                <field name="applicant_count"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'open'"
+                       decoration-warning="state == 'closed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_security_vacancy_form" model="ir.ui.view">
+        <field name="name">security.vacancy.form</field>
+        <field name="model">security.vacancy</field>
+        <field name="arch" type="xml">
+            <form string="Vacancy">
+                <header>
+                    <button name="action_open" string="Post Vacancy"
+                            type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_close" string="Close Vacancy"
+                            type="object"
+                            invisible="state != 'open'"/>
+                    <button name="action_view_applicants"
+                            string="View Applicants"
+                            type="object"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,open,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="job_title"/></h1>
+                    </div>
+                    <group>
+                        <group string="Details">
+                            <field name="site_id"/>
+                            <field name="no_of_posts"/>
+                            <field name="posted_date"/>
+                            <field name="deadline"/>
+                        </group>
+                        <group string="Applications">
+                            <field name="applicant_count" readonly="1"/>
+                        </group>
+                    </group>
+                    <field name="description" placeholder="Job description..."/>
+                    <notebook>
+                        <page string="Applicants">
+                            <field name="applicant_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="phone"/>
+                                    <field name="interview_date"/>
+                                    <field name="stage" widget="badge"
+                                           decoration-success="stage == 'hired'"
+                                           decoration-danger="stage == 'rejected'"
+                                           decoration-warning="stage == 'interview'"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_security_applicant_kanban" model="ir.ui.view">
+        <field name="name">security.applicant.kanban</field>
+        <field name="model">security.applicant</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="stage"/>
+                <field name="vacancy_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_content">
+                                <strong><field name="name"/></strong>
+                                <div><field name="phone"/></div>
+                                <div><field name="vacancy_id"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_security_applicant_form" model="ir.ui.view">
+        <field name="name">security.applicant.form</field>
+        <field name="model">security.applicant</field>
+        <field name="arch" type="xml">
+            <form string="Applicant">
+                <header>
+                    <button name="action_screening" string="Screening"
+                            type="object"
+                            invisible="stage != 'new'"/>
+                    <button name="action_interview" string="Set Interview"
+                            type="object"
+                            invisible="stage != 'screening'"/>
+                    <button name="action_offer" string="Make Offer"
+                            type="object"
+                            invisible="stage != 'interview'"/>
+                    <button name="action_hire" string="Hire"
+                            type="object" class="btn-primary"
+                            invisible="stage != 'offer'"/>
+                    <button name="action_reject" string="Reject"
+                            type="object"
+                            invisible="stage in ['hired','rejected']"/>
+                    <field name="stage" widget="statusbar"
+                           statusbar_visible="new,screening,interview,offer,hired"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Personal Info">
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="id_number"/>
+                            <field name="date_applied"/>
+                        </group>
+                        <group string="Interview">
+                            <field name="vacancy_id"/>
+                            <field name="interview_date"/>
+                            <field name="interviewer_id"/>
+                        </group>
+                    </group>
+                    <field name="notes" placeholder="Interview notes..."/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_employment_action_list" model="ir.ui.view">
+        <field name="name">security.employment.action.list</field>
+        <field name="model">security.employment.action</field>
+        <field name="arch" type="xml">
+            <tree string="Employment Actions">
+                <field name="guard_id"/>
+                <field name="action_type" widget="badge"
+                       decoration-danger="action_type == 'fire'"
+                       decoration-success="action_type == 'hire'"
+                       decoration-warning="action_type == 'suspend'"/>
+                <field name="action_date"/>
+                <field name="reason"/>
+                <field name="approved_by"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_security_vacancy" model="ir.actions.act_window">
+        <field name="name">Vacancies</field>
+        <field name="res_model">security.vacancy</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_security_applicant" model="ir.actions.act_window">
+        <field name="name">Applicants</field>
+        <field name="res_model">security.applicant</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record id="action_employment_action" model="ir.actions.act_window">
+        <field name="name">Employment Actions</field>
+        <field name="res_model">security.employment.action</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_security_guard_form_inherit" model="ir.ui.view">
+        <field name="name">security.guard.form.fire</field>
+        <field name="model">security.guard</field>
+        <field name="inherit_id" ref="view_security_guard_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_fire_wizard"
+                        string="Terminate / Suspend"
+                        type="object"
+                        class="btn-danger"
+                        invisible="status in ['terminated', 'suspended']"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
