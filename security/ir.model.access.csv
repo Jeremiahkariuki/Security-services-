@@ -16,3 +16,10 @@ access_employment_action_ceo,security.employment ceo,model_security_employment_a
 access_hire_wizard_hr,hire.wizard hr,model_hire_wizard,group_security_hr,1,1,1,1
 access_fire_wizard_hr,fire.wizard hr,model_fire_wizard,group_security_hr,1,1,1,1
 access_fire_wizard_ceo,fire.wizard ceo,model_fire_wizard,group_security_ceo,1,1,1,1
+access_security_shift_manager,security.shift manager,model_security_shift,group_security_manager,1,1,1,0
+access_security_shift_hr,security.shift hr,model_security_shift,group_security_hr,1,1,1,1
+access_security_shift_ceo,security.shift ceo,model_security_shift,group_security_ceo,1,1,1,1
+access_security_shift_guard,security.shift guard,model_security_shift,group_security_guard,1,0,0,0
+access_security_roster_manager,security.roster manager,model_security_roster,group_security_manager,1,1,1,0
+access_security_roster_hr,security.roster hr,model_security_roster,group_security_hr,1,1,1,1
+access_security_roster_ceo,security.roster ceo,model_security_roster,group_security_ceo,1,1,1,1
