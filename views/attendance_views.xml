@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Attendance List View -->
+    <record id="view_security_attendance_list" model="ir.ui.view">
+        <field name="name">security.attendance.list</field>
+        <field name="model">security.attendance</field>
+        <field name="arch" type="xml">
+            <tree string="Attendance"
+                  decoration-warning="late_checkin == True"
+                  decoration-danger="state == 'absent'">
+                <field name="date"/>
+                <field name="guard_id"/>
+                <field name="site_id"/>
+                <field name="clock_in"/>
+                <field name="clock_out"/>
+                <field name="hours_worked" widget="float_time"/>
+                <field name="late_checkin" widget="boolean"/>
+                <field name="patrol_count"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'present'"
+                       decoration-warning="state == 'late'"
+                       decoration-danger="state == 'absent'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Attendance Form View -->
+    <record id="view_security_attendance_form" model="ir.ui.view">
+        <field name="name">security.attendance.form</field>
+        <field name="model">security.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Attendance">
+                <header>
+                    <button name="action_clock_in"
+                            string="Clock In"
+                            type="object"
+                            class="btn-primary"
+                            invisible="clock_in != False"/>
+                    <button name="action_clock_out"
+                            string="Clock Out"
+                            type="object"
+                            class="btn-success"
+                            invisible="clock_out != False or clock_in == False"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="present,late,absent"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Guard Info">
+                            <field name="guard_id"/>
+                            <field name="site_id"/>
+                            <field name="shift_id"/>
+                        </group>
+                        <group string="Time">
+                            <field name="clock_in"/>
+                            <field name="clock_out"/>
+                            <field name="hours_worked"
+                                   widget="float_time"
+                                   readonly="1"/>
+                            <field name="late_checkin" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="GPS Location">
+                        <group string="Check In">
+                            <field name="gps_checkin_lat"/>
+                            <field name="gps_checkin_lng"/>
+                        </group>
+                        <group string="Check Out">
+                            <field name="gps_checkout_lat"/>
+                            <field name="gps_checkout_lng"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Patrol Logs">
+                            <field name="patrol_log_ids">
+                                <tree editable="bottom">
+                                    <field name="patrol_time"/>
+                                    <field name="checkpoint_name"/>
+                                    <field name="gps_lat"/>
+                                    <field name="gps_lng"/>
+                                    <field name="incident_found"
+                                           widget="boolean"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Attendance Search -->
+    <record id="view_security_attendance_search" model="ir.ui.view">
+        <field name="name">security.attendance.search</field>
+        <field name="model">security.attendance</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="guard_id"/>
+                <field name="site_id"/>
+                <field name="date"/>
+                <filter name="today" string="Today"
+                        domain="[('date','=',context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="late" string="Late"
+                        domain="[('late_checkin','=',True)]"/>
+                <filter name="absent" string="Absent"
+                        domain="[('state','=','absent')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_guard" string="Guard"
+                            context="{'group_by':'guard_id'}"/>
+                    <filter name="group_site" string="Site"
+                            context="{'group_by':'site_id'}"/>
+                    <filter name="group_date" string="Date"
+                            context="{'group_by':'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Patrol Log List -->
+    <record id="view_security_patrol_list" model="ir.ui.view">
+        <field name="name">security.patrol.list</field>
+        <field name="model">security.patrol.log</field>
+        <field name="arch" type="xml">
+            <tree string="Patrol Logs"
+                  decoration-danger="incident_found == True">
+                <field name="patrol_time"/>
+                <field name="guard_id"/>
+                <field name="site_id"/>
+                <field name="checkpoint_name"/>
+                <field name="incident_found" widget="boolean"/>
+                <field name="notes"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_security_attendance" model="ir.actions.act_window">
+        <field name="name">Attendance</field>
+        <field name="res_model">security.attendance</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id"
+               ref="view_security_attendance_search"/>
+    </record>
+
+    <record id="action_security_patrol" model="ir.actions.act_window">
+        <field name="name">Patrol Logs</field>
+        <field name="res_model">security.patrol.log</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

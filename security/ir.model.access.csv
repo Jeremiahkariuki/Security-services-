@@ -23,3 +23,10 @@ access_security_shift_guard,security.shift guard,model_security_shift,group_secu
 access_security_roster_manager,security.roster manager,model_security_roster,group_security_manager,1,1,1,0
 access_security_roster_hr,security.roster hr,model_security_roster,group_security_hr,1,1,1,1
 access_security_roster_ceo,security.roster ceo,model_security_roster,group_security_ceo,1,1,1,1
+access_security_attendance_manager,security.attendance manager,model_security_attendance,group_security_manager,1,1,1,0
+access_security_attendance_hr,security.attendance hr,model_security_attendance,group_security_hr,1,1,1,1
+access_security_attendance_ceo,security.attendance ceo,model_security_attendance,group_security_ceo,1,1,1,1
+access_security_attendance_guard,security.attendance guard,model_security_attendance,group_security_guard,1,1,1,0
+access_security_patrol_manager,security.patrol manager,model_security_patrol_log,group_security_manager,1,1,1,0
+access_security_patrol_guard,security.patrol guard,model_security_patrol_log,group_security_guard,1,1,1,0
+access_security_patrol_hr,security.patrol hr,model_security_patrol_log,group_security_hr,1,1,1,1

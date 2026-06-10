@@ -24,6 +24,7 @@
         'views/site_views.xml',
         'views/recruitment_views.xml',
         'views/shift_views.xml',
+        'views/attendance_views.xml',
         'views/menu_views.xml',
     ],
     'installable': True,

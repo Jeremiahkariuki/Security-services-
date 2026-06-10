@@ -8,8 +8,10 @@
     <menuitem id="menu_security_guard" name="Guards" parent="menu_security_operations" action="action_security_guard" sequence="10"/>
     <menuitem id="menu_security_shift" name="Shifts" parent="menu_security_operations" action="action_security_shift" sequence="20"/>
     <menuitem id="menu_security_roster" name="Rosters" parent="menu_security_operations" action="action_security_roster" sequence="30"/>
-    <menuitem id="menu_security_site" name="Sites" parent="menu_security_operations" action="action_security_site" sequence="40"/>
-    <menuitem id="menu_security_client" name="Clients" parent="menu_security_operations" action="action_security_client" sequence="50"/>
+    <menuitem id="menu_security_attendance" name="Attendance" parent="menu_security_operations" action="action_security_attendance" sequence="40"/>
+    <menuitem id="menu_security_patrol" name="Patrol Logs" parent="menu_security_operations" action="action_security_patrol" sequence="50"/>
+    <menuitem id="menu_security_site" name="Sites" parent="menu_security_operations" action="action_security_site" sequence="60"/>
+    <menuitem id="menu_security_client" name="Clients" parent="menu_security_operations" action="action_security_client" sequence="70"/>
     <menuitem id="menu_security_vacancy" name="Vacancies" parent="menu_security_hr" action="action_security_vacancy" sequence="10"/>
     <menuitem id="menu_security_applicant" name="Applicants" parent="menu_security_hr" action="action_security_applicant" sequence="20"/>
     <menuitem id="menu_employment_action" name="Employment Actions" parent="menu_security_hr" action="action_employment_action" sequence="30"/>
