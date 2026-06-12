@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Incident List View -->
+    <record id="view_security_incident_list" model="ir.ui.view">
+        <field name="name">security.incident.list</field>
+        <field name="model">security.incident</field>
+        <field name="arch" type="xml">
+            <tree string="Incidents"
+                  decoration-danger="severity == 'critical'"
+                  decoration-warning="severity == 'high'"
+                  decoration-info="severity == 'medium'">
+                <field name="name"/>
+                <field name="date_reported"/>
+                <field name="site_id"/>
+                <field name="incident_type"/>
+                <field name="severity" widget="badge"
+                       decoration-danger="severity == 'critical'"
+                       decoration-warning="severity == 'high'"
+                       decoration-info="severity == 'medium'"
+                       decoration-success="severity == 'low'"/>
+                <field name="reported_by"/>
+                <field name="injuries" widget="boolean"/>
+                <field name="state" widget="badge"
+                       decoration-danger="state == 'escalated'"
+                       decoration-success="state == 'closed'"
+                       decoration-warning="state == 'new'"
+                       decoration-info="state == 'under_review'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Incident Form View -->
+    <record id="view_security_incident_form" model="ir.ui.view">
+        <field name="name">security.incident.form</field>
+        <field name="model">security.incident</field>
+        <field name="arch" type="xml">
+            <form string="Incident Report">
+                <header>
+                    <button name="action_review"
+                            string="Start Review"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'new'"/>
+                    <button name="action_resolve"
+                            string="Mark Resolved"
+                            type="object"
+                            class="btn-success"
+                            invisible="state not in ['under_review','escalated']"/>
+                    <button name="action_close"
+                            string="Close"
+                            type="object"
+                            invisible="state != 'resolved'"/>
+                    <button name="action_escalate"
+                            string="Escalate"
+                            type="object"
+                            class="btn-danger"
+                            invisible="state in ['closed','escalated']"/>
+                    <button name="action_reopen"
+                            string="Reopen"
+                            type="object"
+                            invisible="state not in ['closed','resolved']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,under_review,resolved,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Incident Details">
+                            <field name="incident_type"/>
+                            <field name="severity"/>
+                            <field name="site_id"/>
+                            <field name="shift_id"/>
+                            <field name="reported_by"/>
+                            <field name="assigned_to"/>
+                        </group>
+                        <group string="Date and Time">
+                            <field name="date_occurred"/>
+                            <field name="date_reported"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Impact">
+                            <field name="injuries"/>
+                            <field name="property_damage"/>
+                            <field name="estimated_loss"
+                                   invisible="property_damage == False"/>
+                            <field name="police_report"/>
+                            <field name="police_report_no"
+                                   invisible="police_report == False"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"
+                                   placeholder="Describe what happened..."/>
+                            <separator string="Immediate Action Taken"/>
+                            <field name="action_taken"
+                                   placeholder="What action was taken immediately..."/>
+                        </page>
+                        <page string="Resolution">
+                            <field name="resolution"
+                                   placeholder="Enter resolution details..."/>
+                        </page>
+                        <page string="Evidence">
+                            <field name="photo_ids"
+                                   widget="many2many_binary"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Incident Search View -->
+    <record id="view_security_incident_search" model="ir.ui.view">
+        <field name="name">security.incident.search</field>
+        <field name="model">security.incident</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="site_id"/>
+                <field name="reported_by"/>
+                <field name="incident_type"/>
+                <filter name="new" string="New"
+                        domain="[('state','=','new')]"/>
+                <filter name="critical" string="Critical"
+                        domain="[('severity','=','critical')]"/>
+                <filter name="escalated" string="Escalated"
+                        domain="[('state','=','escalated')]"/>
+                <filter name="injuries" string="With Injuries"
+                        domain="[('injuries','=',True)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_site" string="Site"
+                            context="{'group_by':'site_id'}"/>
+                    <filter name="group_type" string="Type"
+                            context="{'group_by':'incident_type'}"/>
+                    <filter name="group_severity" string="Severity"
+                            context="{'group_by':'severity'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Incident Kanban View -->
+    <record id="view_security_incident_kanban" model="ir.ui.view">
+        <field name="name">security.incident.kanban</field>
+        <field name="model">security.incident</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="severity"/>
+                <field name="site_id"/>
+                <field name="incident_type"/>
+                <field name="state"/>
+                <field name="reported_by"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_content">
+                                <strong><field name="name"/></strong>
+                                <div>
+                                    <field name="incident_type"/>
+                                </div>
+                                <div>
+                                    Site: <field name="site_id"/>
+                                </div>
+                                <div>
+                                    By: <field name="reported_by"/>
+                                </div>
+                                <div>
+                                    <field name="severity"
+                                           widget="badge"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_security_incident" model="ir.actions.act_window">
+        <field name="name">Incidents</field>
+        <field name="res_model">security.incident</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id"
+               ref="view_security_incident_search"/>
+        <field name="context">{'search_default_new': 1}</field>
+    </record>
+
+</odoo>

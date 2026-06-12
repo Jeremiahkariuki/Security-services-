@@ -4,3 +4,4 @@ from . import security_site
 from . import security_recruitment
 from . import security_shift
 from . import security_attendance
+from . import security_incident

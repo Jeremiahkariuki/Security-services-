@@ -30,3 +30,7 @@ access_security_attendance_guard,security.attendance guard,model_security_attend
 access_security_patrol_manager,security.patrol manager,model_security_patrol_log,group_security_manager,1,1,1,0
 access_security_patrol_guard,security.patrol guard,model_security_patrol_log,group_security_guard,1,1,1,0
 access_security_patrol_hr,security.patrol hr,model_security_patrol_log,group_security_hr,1,1,1,1
+access_security_incident_guard,security.incident guard,model_security_incident,group_security_guard,1,1,1,0
+access_security_incident_manager,security.incident manager,model_security_incident,group_security_manager,1,1,1,0
+access_security_incident_hr,security.incident hr,model_security_incident,group_security_hr,1,1,1,1
+access_security_incident_ceo,security.incident ceo,model_security_incident,group_security_ceo,1,1,1,1

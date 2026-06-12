@@ -17,6 +17,7 @@
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
+        'data/incident_sequence.xml',
         'wizard/hire_wizard_view.xml',
         'wizard/fire_wizard_view.xml',
         'views/guard_views.xml',
@@ -25,6 +26,7 @@
         'views/recruitment_views.xml',
         'views/shift_views.xml',
         'views/attendance_views.xml',
+        'views/incident_views.xml',
         'views/menu_views.xml',
     ],
     'installable': True,
