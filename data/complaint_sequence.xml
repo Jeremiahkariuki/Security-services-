@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_security_complaint" model="ir.sequence">
+            <field name="name">Security Complaint</field>
+            <field name="code">security.complaint</field>
+            <field name="prefix">CMP/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

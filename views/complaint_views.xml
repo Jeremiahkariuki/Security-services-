@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Complaint List View -->
+    <record id="view_security_complaint_list" model="ir.ui.view">
+        <field name="name">security.complaint.list</field>
+        <field name="model">security.complaint</field>
+        <field name="arch" type="xml">
+            <tree string="Complaints"
+                  decoration-danger="state == 'escalated'"
+                  decoration-warning="priority == 'high'"
+                  decoration-success="state == 'closed'">
+                <field name="name"/>
+                <field name="date_raised"/>
+                <field name="guard_id"/>
+                <field name="subject"/>
+                <field name="complaint_type"/>
+                <field name="priority" widget="badge"
+                       decoration-danger="priority == 'high'"
+                       decoration-warning="priority == 'medium'"
+                       decoration-success="priority == 'low'"/>
+                <field name="reviewed_by"/>
+                <field name="state" widget="badge"
+                       decoration-danger="state == 'escalated'"
+                       decoration-success="state == 'closed'"
+                       decoration-info="state == 'in_review'"
+                       decoration-warning="state == 'new'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Complaint Form View -->
+    <record id="view_security_complaint_form" model="ir.ui.view">
+        <field name="name">security.complaint.form</field>
+        <field name="model">security.complaint</field>
+        <field name="arch" type="xml">
+            <form string="Complaint">
+                <header>
+                    <button name="action_review"
+                            string="Start Review"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'new'"/>
+                    <button name="action_resolve"
+                            string="Mark Resolved"
+                            type="object"
+                            class="btn-success"
+                            invisible="state not in ['in_review','referred']"/>
+                    <button name="action_escalate_to_ceo"
+                            string="Escalate to CEO"
+                            type="object"
+                            class="btn-warning"
+                            invisible="state not in ['in_review','referred']"/>
+                    <button name="action_close"
+                            string="Close"
+                            type="object"
+                            invisible="state not in ['resolved','escalated']"/>
+                    <button name="action_refer_back"
+                            string="Refer Back to HR"
+                            type="object"
+                            invisible="state != 'escalated'"/>
+                    <button name="action_reopen"
+                            string="Reopen"
+                            type="object"
+                            invisible="state not in ['closed','resolved']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,in_review,resolved,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="subject"/></h2>
+                    </div>
+                    <group>
+                        <group string="Complaint Details">
+                            <field name="guard_id"/>
+                            <field name="complaint_type"/>
+                            <field name="priority"/>
+                            <field name="date_raised"/>
+                        </group>
+                        <group string="Review Info">
+                            <field name="reviewed_by" readonly="1"/>
+                            <field name="date_resolved" readonly="1"/>
+                            <field name="escalated_by" readonly="1"/>
+                            <field name="date_escalated" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"
+                                   placeholder="Describe the complaint..."/>
+                        </page>
+                        <page string="Resolution">
+                            <field name="resolution_notes"
+                                   placeholder="Enter resolution notes..."/>
+                        </page>
+                        <page string="CEO Notes"
+                              invisible="state not in ['escalated','closed','referred']">
+                            <field name="ceo_notes"
+                                   placeholder="CEO notes and decision..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Complaint Search -->
+    <record id="view_security_complaint_search" model="ir.ui.view">
+        <field name="name">security.complaint.search</field>
+        <field name="model">security.complaint</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="guard_id"/>
+                <field name="subject"/>
+                <filter name="new" string="New"
+                        domain="[('state','=','new')]"/>
+                <filter name="in_review" string="In Review"
+                        domain="[('state','=','in_review')]"/>
+                <filter name="escalated" string="Escalated"
+                        domain="[('state','=','escalated')]"/>
+                <filter name="high" string="High Priority"
+                        domain="[('priority','=','high')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_state" string="Status"
+                            context="{'group_by':'state'}"/>
+                    <filter name="group_type" string="Type"
+                            context="{'group_by':'complaint_type'}"/>
+                    <filter name="group_guard" string="Guard"
+                            context="{'group_by':'guard_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Complaint Kanban -->
+    <record id="view_security_complaint_kanban" model="ir.ui.view">
+        <field name="name">security.complaint.kanban</field>
+        <field name="model">security.complaint</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="guard_id"/>
+                <field name="subject"/>
+                <field name="priority"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_content">
+                                <strong><field name="name"/></strong>
+                                <div><field name="subject"/></div>
+                                <div>
+                                    Guard: <field name="guard_id"/>
+                                </div>
+                                <div>
+                                    <field name="priority" widget="badge"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_security_complaint" model="ir.actions.act_window">
+        <field name="name">Complaints</field>
+        <field name="res_model">security.complaint</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id"
+               ref="view_security_complaint_search"/>
+    </record>
+
+</odoo>
