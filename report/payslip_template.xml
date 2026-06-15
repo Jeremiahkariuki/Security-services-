@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_payslip_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">PAYSLIP</h2>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Guard:</strong>
+                                <t t-esc="doc.guard_id.name"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Reference:</strong>
+                                <t t-esc="doc.name"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Period:</strong>
+                                <t t-esc="doc.date_from"/> to
+                                <t t-esc="doc.date_to"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Payment Date:</strong>
+                                <t t-esc="doc.payment_date"/>
+                            </div>
+                        </div>
+                        <hr/>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Earnings</th>
+                                    <th>Amount (KES)</th>
+                                    <th>Deductions</th>
+                                    <th>Amount (KES)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Basic Salary</td>
+                                    <td><t t-esc="'{:,.2f}'.format(doc.basic_salary)"/></td>
+                                    <td>NHIF</td>
+                                    <td><t t-esc="'{:,.2f}'.format(doc.nhif)"/></td>
+                                </tr>
+                                <tr>
+                                    <td>House Allowance</td>
+                                    <td><t t-esc="'{:,.2f}'.format(doc.house_allowance)"/></td>
+                                    <td>NSSF</td>
+                                    <td><t t-esc="'{:,.2f}'.format(doc.nssf)"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Transport Allowance</td>
+                                    <td><t t-esc="'{:,.2f}'.format(doc.transport_allowance)"/></td>
+                                    <td>PAYE</td>
+                                    <td><t t-esc="'{:,.2f}'.format(doc.paye)"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Other Allowances</td>
+                                    <td><t t-esc="'{:,.2f}'.format(doc.other_allowances)"/></td>
+                                    <td>Other Deductions</td>
+                                    <td><t t-esc="'{:,.2f}'.format(doc.other_deductions)"/></td>
+                                </tr>
+                                <tr class="table-success">
+                                    <th>Gross Pay</th>
+                                    <th><t t-esc="'{:,.2f}'.format(doc.gross_pay)"/></th>
+                                    <th>Total Deductions</th>
+                                    <th><t t-esc="'{:,.2f}'.format(doc.total_deductions)"/></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <h3>
+                                    NET PAY: KES
+                                    <t t-esc="'{:,.2f}'.format(doc.net_pay)"/>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Payment Method:</strong>
+                                <t t-esc="doc.payment_method"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Reference:</strong>
+                                <t t-esc="doc.payment_reference or 'N/A'"/>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-6">
+                                <p>________________________</p>
+                                <p>Guard Signature</p>
+                            </div>
+                            <div class="col-6">
+                                <p>________________________</p>
+                                <p>HR Manager Signature</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

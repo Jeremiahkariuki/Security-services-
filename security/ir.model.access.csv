@@ -38,3 +38,7 @@ access_security_complaint_guard,security.complaint guard,model_security_complain
 access_security_complaint_manager,security.complaint manager,model_security_complaint,group_security_manager,1,1,0,0
 access_security_complaint_hr,security.complaint hr,model_security_complaint,group_security_hr,1,1,0,0
 access_security_complaint_ceo,security.complaint ceo,model_security_complaint,group_security_ceo,1,1,1,1
+access_security_payslip_hr,security.payslip hr,model_security_payslip,group_security_hr,1,1,1,1
+access_security_payslip_ceo,security.payslip ceo,model_security_payslip,group_security_ceo,1,1,1,1
+access_security_payslip_manager,security.payslip manager,model_security_payslip,group_security_manager,1,0,0,0
+access_security_payslip_guard,security.payslip guard,model_security_payslip,group_security_guard,1,0,0,0

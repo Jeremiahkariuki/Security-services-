@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Payslip List View -->
+    <record id="view_security_payslip_list" model="ir.ui.view">
+        <field name="name">security.payslip.list</field>
+        <field name="model">security.payslip</field>
+        <field name="arch" type="xml">
+            <tree string="Payslips"
+                  decoration-success="state == 'paid'"
+                  decoration-warning="state == 'draft'">
+                <field name="name"/>
+                <field name="guard_id"/>
+                <field name="month"/>
+                <field name="year"/>
+                <field name="basic_salary"/>
+                <field name="gross_pay"/>
+                <field name="total_deductions"/>
+                <field name="net_pay"/>
+                <field name="payment_method"/>
+                <field name="payment_date"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'paid'"
+                       decoration-info="state == 'confirmed'"
+                       decoration-warning="state == 'draft'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Payslip Form View -->
+    <record id="view_security_payslip_form" model="ir.ui.view">
+        <field name="name">security.payslip.form</field>
+        <field name="model">security.payslip</field>
+        <field name="arch" type="xml">
+            <form string="Payslip">
+                <header>
+                    <button name="action_confirm"
+                            string="Confirm"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_mark_paid"
+                            string="Mark as Paid"
+                            type="object"
+                            class="btn-success"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_reset"
+                            string="Reset to Draft"
+                            type="object"
+                            invisible="state != 'confirmed'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,paid"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Guard Information">
+                            <field name="guard_id"/>
+                            <field name="month"/>
+                            <field name="year"/>
+                            <field name="date_from" readonly="1"/>
+                            <field name="date_to" readonly="1"/>
+                            <field name="shifts_worked" readonly="1"/>
+                            <field name="days_worked"/>
+                        </group>
+                        <group string="Payment Details"
+                               invisible="state != 'paid'">
+                            <field name="payment_date"/>
+                            <field name="payment_method"/>
+                            <field name="payment_reference"/>
+                            <field name="paid_by" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Earnings">
+                            <group>
+                                <group string="Allowances">
+                                    <field name="basic_salary"/>
+                                    <field name="house_allowance"/>
+                                    <field name="transport_allowance"/>
+                                    <field name="other_allowances"/>
+                                </group>
+                                <group string="Total">
+                                    <field name="gross_pay"
+                                           readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Deductions">
+                            <group>
+                                <group string="Statutory">
+                                    <field name="nhif" readonly="1"/>
+                                    <field name="nssf" readonly="1"/>
+                                    <field name="paye" readonly="1"/>
+                                    <field name="other_deductions"/>
+                                </group>
+                                <group string="Total">
+                                    <field name="total_deductions"
+                                           readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Summary">
+                            <group>
+                                <field name="gross_pay" readonly="1"/>
+                                <field name="total_deductions"
+                                       readonly="1"/>
+                                <field name="net_pay" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <field name="notes" placeholder="Notes..."/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Payslip Search -->
+    <record id="view_security_payslip_search" model="ir.ui.view">
+        <field name="name">security.payslip.search</field>
+        <field name="model">security.payslip</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="guard_id"/>
+                <field name="month"/>
+                <field name="year"/>
+                <filter name="draft" string="Draft"
+                        domain="[('state','=','draft')]"/>
+                <filter name="confirmed" string="Confirmed"
+                        domain="[('state','=','confirmed')]"/>
+                <filter name="paid" string="Paid"
+                        domain="[('state','=','paid')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_guard" string="Guard"
+                            context="{'group_by':'guard_id'}"/>
+                    <filter name="group_month" string="Month"
+                            context="{'group_by':'month'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_security_payslip" model="ir.actions.act_window">
+        <field name="name">Payslips</field>
+        <field name="res_model">security.payslip</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id"
+               ref="view_security_payslip_search"/>
+    </record>
+
+</odoo>
