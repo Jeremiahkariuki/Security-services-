@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_security"
+              name="Portal My Home: Security"
+              inherit_id="portal.portal_my_home"
+              priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">My Dashboard</t>
+                <t t-set="url">/my/guard-dashboard</t>
+                <t t-set="placeholder_count">shift_count</t>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">My Payslips</t>
+                <t t-set="url">/my/guard-payslips</t>
+                <t t-set="placeholder_count">payslip_count</t>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">My Complaints</t>
+                <t t-set="url">/my/guard-complaints</t>
+                <t t-set="placeholder_count">complaint_count</t>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_guard_dashboard" name="Guard Dashboard">
+        <t t-call="portal.portal_layout">
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">My Dashboard</t>
+            </t>
+            <div class="container mt-4">
+                <div class="alert alert-primary">
+                    <h4>Welcome, <t t-esc="guard.name"/></h4>
+                    <p>
+                        Site: <strong><t t-esc="guard.site_id.name or 'Not Assigned'"/></strong>
+                        | Status: <strong><t t-esc="guard.status"/></strong>
+                        | Contract Ends: <strong><t t-esc="guard.contract_end"/></strong>
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h5>Today's Shift</h5>
+                            </div>
+                            <div class="card-body">
+                                <t t-if="today_shift">
+                                    <p><strong>Site:</strong> <t t-esc="today_shift.site_id.name"/></p>
+                                    <p><strong>Type:</strong> <t t-esc="today_shift.shift_type"/></p>
+                                    <p><strong>Status:</strong> <t t-esc="today_shift.state"/></p>
+                                </t>
+                                <t t-else="">
+                                    <p class="text-muted">No shift scheduled for today.</p>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-success text-white">
+                                <h5>Quick Summary</h5>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Recent Shifts:</strong> <t t-esc="len(recent_shifts)"/></p>
+                                <p><strong>Paid Payslips:</strong> <t t-esc="len(payslips)"/></p>
+                                <p><strong>Complaints:</strong> <t t-esc="len(complaints)"/></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header"><h5>Recent Shifts</h5></div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Site</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="recent_shifts" t-as="shift">
+                                    <tr>
+                                        <td><t t-esc="shift.date"/></td>
+                                        <td><t t-esc="shift.site_id.name"/></td>
+                                        <td><t t-esc="shift.shift_type"/></td>
+                                        <td><t t-esc="shift.state"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Recent Payslips
+                            <a href="/my/guard-payslips" class="btn btn-sm btn-outline-primary float-right">View All</a>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Month/Year</th>
+                                    <th>Net Pay (KES)</th>
+                                    <th>Payment Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="payslips" t-as="slip">
+                                    <tr>
+                                        <td><t t-esc="slip.name"/></td>
+                                        <td><t t-esc="slip.month"/>/<t t-esc="slip.year"/></td>
+                                        <td><t t-esc="'{:,.2f}'.format(slip.net_pay)"/></td>
+                                        <td><t t-esc="slip.payment_date"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="text-center mb-4">
+                    <a href="/my/guard-complaints" class="btn btn-warning btn-lg">
+                        Raise a Complaint
+                    </a>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_guard_payslips" name="My Payslips">
+        <t t-call="portal.portal_layout">
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">My Payslips</t>
+            </t>
+            <div class="container mt-4">
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Reference</th>
+                            <th>Month/Year</th>
+                            <th>Basic (KES)</th>
+                            <th>Gross (KES)</th>
+                            <th>Deductions (KES)</th>
+                            <th>Net Pay (KES)</th>
+                            <th>Method</th>
+                            <th>Payment Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="payslips" t-as="slip">
+                            <tr>
+                                <td><t t-esc="slip.name"/></td>
+                                <td><t t-esc="slip.month"/>/<t t-esc="slip.year"/></td>
+                                <td><t t-esc="'{:,.2f}'.format(slip.basic_salary)"/></td>
+                                <td><t t-esc="'{:,.2f}'.format(slip.gross_pay)"/></td>
+                                <td><t t-esc="'{:,.2f}'.format(slip.total_deductions)"/></td>
+                                <td><strong><t t-esc="'{:,.2f}'.format(slip.net_pay)"/></strong></td>
+                                <td><t t-esc="slip.payment_method or '-'"/></td>
+                                <td><t t-esc="slip.payment_date or '-'"/></td>
+                                <td><t t-esc="slip.state"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_guard_complaints" name="My Complaints">
+        <t t-call="portal.portal_layout">
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">My Complaints</t>
+            </t>
+            <div class="container mt-4">
+                <div class="card mb-4">
+                    <div class="card-header bg-warning">
+                        <h5>Raise New Complaint</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/my/guard-complaints/submit" method="POST">
+                            <input type="hidden" name="csrf_token"
+                                   t-att-value="request.csrf_token()"/>
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <input type="text" name="subject"
+                                       class="form-control" required="required"
+                                       placeholder="Brief subject..."/>
+                            </div>
+                            <div class="form-group">
+                                <label>Complaint Type</label>
+                                <select name="complaint_type" class="form-control">
+                                    <option value="salary">Salary Issue</option>
+                                    <option value="harassment">Harassment</option>
+                                    <option value="working_conditions">Working Conditions</option>
+                                    <option value="equipment">Equipment Issue</option>
+                                    <option value="schedule">Schedule Issue</option>
+                                    <option value="management">Management Issue</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Priority</label>
+                                <select name="priority" class="form-control">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected="selected">Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea name="description"
+                                          class="form-control" rows="4"
+                                          required="required"
+                                          placeholder="Describe your complaint..."/>
+                            </div>
+                            <button type="submit" class="btn btn-warning">
+                                Submit Complaint
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h5>My Complaints History</h5></div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Subject</th>
+                                    <th>Type</th>
+                                    <th>Priority</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="complaints" t-as="complaint">
+                                    <tr>
+                                        <td><t t-esc="complaint.name"/></td>
+                                        <td><t t-esc="complaint.subject"/></td>
+                                        <td><t t-esc="complaint.complaint_type"/></td>
+                                        <td><t t-esc="complaint.priority"/></td>
+                                        <td><t t-esc="complaint.date_raised"/></td>
+                                        <td><t t-esc="complaint.state"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>
