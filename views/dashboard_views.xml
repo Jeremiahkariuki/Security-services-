@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Guard Graph View -->
+    <record id="view_security_guard_graph" model="ir.ui.view">
+        <field name="name">security.guard.graph</field>
+        <field name="model">security.guard</field>
+        <field name="arch" type="xml">
+            <graph string="Guards" type="bar">
+                <field name="site_id" type="row"/>
+                <field name="status" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Guard Pivot View -->
+    <record id="view_security_guard_pivot" model="ir.ui.view">
+        <field name="name">security.guard.pivot</field>
+        <field name="model">security.guard</field>
+        <field name="arch" type="xml">
+            <pivot string="Guards Summary">
+                <field name="site_id" type="row"/>
+                <field name="status" type="col"/>
+                <field name="basic_salary" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Shift Graph View -->
+    <record id="view_security_shift_graph" model="ir.ui.view">
+        <field name="name">security.shift.graph</field>
+        <field name="model">security.shift</field>
+        <field name="arch" type="xml">
+            <graph string="Shifts" type="bar">
+                <field name="site_id" type="row"/>
+                <field name="shift_type" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Shift Pivot View -->
+    <record id="view_security_shift_pivot" model="ir.ui.view">
+        <field name="name">security.shift.pivot</field>
+        <field name="model">security.shift</field>
+        <field name="arch" type="xml">
+            <pivot string="Shifts Summary">
+                <field name="date" type="row" interval="month"/>
+                <field name="site_id" type="col"/>
+                <field name="hours_worked" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Incident Graph View -->
+    <record id="view_security_incident_graph" model="ir.ui.view">
+        <field name="name">security.incident.graph</field>
+        <field name="model">security.incident</field>
+        <field name="arch" type="xml">
+            <graph string="Incidents" type="pie">
+                <field name="incident_type" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Incident Pivot View -->
+    <record id="view_security_incident_pivot" model="ir.ui.view">
+        <field name="name">security.incident.pivot</field>
+        <field name="model">security.incident</field>
+        <field name="arch" type="xml">
+            <pivot string="Incidents Summary">
+                <field name="site_id" type="row"/>
+                <field name="severity" type="col"/>
+                <field name="incident_type" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Payslip Graph View -->
+    <record id="view_security_payslip_graph" model="ir.ui.view">
+        <field name="name">security.payslip.graph</field>
+        <field name="model">security.payslip</field>
+        <field name="arch" type="xml">
+            <graph string="Payroll" type="bar">
+                <field name="month" type="row"/>
+                <field name="net_pay" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Payslip Pivot View -->
+    <record id="view_security_payslip_pivot" model="ir.ui.view">
+        <field name="name">security.payslip.pivot</field>
+        <field name="model">security.payslip</field>
+        <field name="arch" type="xml">
+            <pivot string="Payroll Summary">
+                <field name="guard_id" type="row"/>
+                <field name="month" type="col"/>
+                <field name="net_pay" type="measure"/>
+                <field name="gross_pay" type="measure"/>
+                <field name="total_deductions" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Update Actions to include graph and pivot -->
+    <record id="action_security_guard_report" model="ir.actions.act_window">
+        <field name="name">Guards Report</field>
+        <field name="res_model">security.guard</field>
+        <field name="view_mode">graph,pivot,tree</field>
+    </record>
+
+    <record id="action_security_shift_report" model="ir.actions.act_window">
+        <field name="name">Shifts Report</field>
+        <field name="res_model">security.shift</field>
+        <field name="view_mode">graph,pivot,tree</field>
+    </record>
+
+    <record id="action_security_incident_report" model="ir.actions.act_window">
+        <field name="name">Incidents Report</field>
+        <field name="res_model">security.incident</field>
+        <field name="view_mode">graph,pivot,tree</field>
+    </record>
+
+    <record id="action_security_payslip_report" model="ir.actions.act_window">
+        <field name="name">Payroll Report</field>
+        <field name="res_model">security.payslip</field>
+        <field name="view_mode">graph,pivot,tree</field>
+    </record>
+
+</odoo>

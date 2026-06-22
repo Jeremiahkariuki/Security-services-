@@ -1,99 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_security_root"
-              name="Security Services"
-              sequence="10"/>
-    <menuitem id="menu_security_operations"
-              name="Operations"
-              parent="menu_security_root"
-              sequence="10"/>
-    <menuitem id="menu_security_hr"
-              name="Human Resources"
-              parent="menu_security_root"
-              sequence="20"
-              groups="security_services.group_security_hr"/>
-    <menuitem id="menu_security_finance"
-              name="Finance"
-              parent="menu_security_root"
-              sequence="30"
-              groups="security_services.group_security_accounts,security_services.group_security_ceo"/>
-    <menuitem id="menu_security_config"
-              name="Configuration"
-              parent="menu_security_root"
-              sequence="100"
-              groups="security_services.group_security_ceo"/>
+    <menuitem id="menu_security_root" name="Security Services" sequence="10"/>
+    <menuitem id="menu_security_operations" name="Operations" parent="menu_security_root" sequence="10"/>
+    <menuitem id="menu_security_hr" name="Human Resources" parent="menu_security_root" sequence="20" groups="security_services.group_security_hr"/>
+    <menuitem id="menu_security_finance" name="Finance" parent="menu_security_root" sequence="30" groups="security_services.group_security_accounts,security_services.group_security_ceo"/>
+    <menuitem id="menu_security_reports" name="Reports" parent="menu_security_root" sequence="40" groups="security_services.group_security_manager"/>
+    <menuitem id="menu_security_config" name="Configuration" parent="menu_security_root" sequence="100" groups="security_services.group_security_ceo"/>
 
-    <!-- Operations submenus -->
-    <menuitem id="menu_security_guard"
-              name="Guards"
-              parent="menu_security_operations"
-              action="action_security_guard"
-              sequence="10"/>
-    <menuitem id="menu_security_shift"
-              name="Shifts"
-              parent="menu_security_operations"
-              action="action_security_shift"
-              sequence="20"/>
-    <menuitem id="menu_security_roster"
-              name="Rosters"
-              parent="menu_security_operations"
-              action="action_security_roster"
-              sequence="30"
-              groups="security_services.group_security_manager"/>
-    <menuitem id="menu_security_attendance"
-              name="Attendance"
-              parent="menu_security_operations"
-              action="action_security_attendance"
-              sequence="40"/>
-    <menuitem id="menu_security_patrol"
-              name="Patrol Logs"
-              parent="menu_security_operations"
-              action="action_security_patrol"
-              sequence="50"/>
-    <menuitem id="menu_security_incident"
-              name="Incidents"
-              parent="menu_security_operations"
-              action="action_security_incident"
-              sequence="60"/>
-    <menuitem id="menu_security_site"
-              name="Sites"
-              parent="menu_security_operations"
-              action="action_security_site"
-              sequence="70"
-              groups="security_services.group_security_manager"/>
-    <menuitem id="menu_security_client"
-              name="Clients"
-              parent="menu_security_operations"
-              action="action_security_client"
-              sequence="80"
-              groups="security_services.group_security_manager"/>
+    <!-- Operations -->
+    <menuitem id="menu_security_guard" name="Guards" parent="menu_security_operations" action="action_security_guard" sequence="10"/>
+    <menuitem id="menu_security_shift" name="Shifts" parent="menu_security_operations" action="action_security_shift" sequence="20"/>
+    <menuitem id="menu_security_roster" name="Rosters" parent="menu_security_operations" action="action_security_roster" sequence="30" groups="security_services.group_security_manager"/>
+    <menuitem id="menu_security_attendance" name="Attendance" parent="menu_security_operations" action="action_security_attendance" sequence="40"/>
+    <menuitem id="menu_security_patrol" name="Patrol Logs" parent="menu_security_operations" action="action_security_patrol" sequence="50"/>
+    <menuitem id="menu_security_incident" name="Incidents" parent="menu_security_operations" action="action_security_incident" sequence="60"/>
+    <menuitem id="menu_security_site" name="Sites" parent="menu_security_operations" action="action_security_site" sequence="70" groups="security_services.group_security_manager"/>
+    <menuitem id="menu_security_client" name="Clients" parent="menu_security_operations" action="action_security_client" sequence="80" groups="security_services.group_security_manager"/>
 
-    <!-- HR submenus -->
-    <menuitem id="menu_security_vacancy"
-              name="Vacancies"
-              parent="menu_security_hr"
-              action="action_security_vacancy"
-              sequence="10"/>
-    <menuitem id="menu_security_applicant"
-              name="Applicants"
-              parent="menu_security_hr"
-              action="action_security_applicant"
-              sequence="20"/>
-    <menuitem id="menu_employment_action"
-              name="Employment Actions"
-              parent="menu_security_hr"
-              action="action_employment_action"
-              sequence="30"/>
-    <menuitem id="menu_security_complaint"
-              name="Complaints"
-              parent="menu_security_hr"
-              action="action_security_complaint"
-              sequence="40"/>
+    <!-- HR -->
+    <menuitem id="menu_security_vacancy" name="Vacancies" parent="menu_security_hr" action="action_security_vacancy" sequence="10"/>
+    <menuitem id="menu_security_applicant" name="Applicants" parent="menu_security_hr" action="action_security_applicant" sequence="20"/>
+    <menuitem id="menu_employment_action" name="Employment Actions" parent="menu_security_hr" action="action_employment_action" sequence="30"/>
+    <menuitem id="menu_security_complaint" name="Complaints" parent="menu_security_hr" action="action_security_complaint" sequence="40"/>
 
-    <!-- Finance submenus -->
-    <menuitem id="menu_security_payslip"
-              name="Payslips"
-              parent="menu_security_finance"
-              action="action_security_payslip"
-              sequence="10"/>
+    <!-- Finance -->
+    <menuitem id="menu_security_payslip" name="Payslips" parent="menu_security_finance" action="action_security_payslip" sequence="10"/>
+
+    <!-- Reports -->
+    <menuitem id="menu_report_guards" name="Guards Report" parent="menu_security_reports" action="action_security_guard_report" sequence="10"/>
+    <menuitem id="menu_report_shifts" name="Shifts Report" parent="menu_security_reports" action="action_security_shift_report" sequence="20"/>
+    <menuitem id="menu_report_incidents" name="Incidents Report" parent="menu_security_reports" action="action_security_incident_report" sequence="30"/>
+    <menuitem id="menu_report_payroll" name="Payroll Report" parent="menu_security_reports" action="action_security_payslip_report" sequence="40"/>
 </odoo>

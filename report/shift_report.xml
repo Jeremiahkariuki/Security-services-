@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_shift" model="ir.actions.report">
+        <field name="name">Shift Report</field>
+        <field name="model">security.shift</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">security_services.report_shift_template</field>
+        <field name="report_file">security_services.report_shift_template</field>
+        <field name="binding_model_id" ref="model_security_shift"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_shift_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">SHIFT REPORT</h2>
+                        <hr/>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Reference</th>
+                                <td><t t-esc="doc.name"/></td>
+                                <th>Date</th>
+                                <td><t t-esc="doc.date"/></td>
+                            </tr>
+                            <tr>
+                                <th>Guard</th>
+                                <td><t t-esc="doc.guard_id.name"/></td>
+                                <th>Site</th>
+                                <td><t t-esc="doc.site_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <th>Shift Type</th>
+                                <td><t t-esc="doc.shift_type"/></td>
+                                <th>Hours Worked</th>
+                                <td><t t-esc="doc.hours_worked"/></td>
+                            </tr>
+                            <tr>
+                                <th>Clock In</th>
+                                <td><t t-esc="doc.checked_in or '-'"/></td>
+                                <th>Clock Out</th>
+                                <td><t t-esc="doc.checked_out or '-'"/></td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td><t t-esc="doc.state"/></td>
+                                <th>Supervisor</th>
+                                <td><t t-esc="doc.supervisor_id.name or '-'"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

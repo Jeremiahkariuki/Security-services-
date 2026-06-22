@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_incident" model="ir.actions.report">
+        <field name="name">Incident Report</field>
+        <field name="model">security.incident</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">security_services.report_incident_template</field>
+        <field name="report_file">security_services.report_incident_template</field>
+        <field name="binding_model_id" ref="model_security_incident"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_incident_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">INCIDENT REPORT</h2>
+                        <hr/>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <strong>Reference:</strong>
+                                <t t-esc="doc.name"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Date Reported:</strong>
+                                <t t-esc="doc.date_reported"/>
+                            </div>
+                        </div>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Site</th>
+                                <td><t t-esc="doc.site_id.name"/></td>
+                                <th>Type</th>
+                                <td><t t-esc="doc.incident_type"/></td>
+                            </tr>
+                            <tr>
+                                <th>Severity</th>
+                                <td><t t-esc="doc.severity"/></td>
+                                <th>Status</th>
+                                <td><t t-esc="doc.state"/></td>
+                            </tr>
+                            <tr>
+                                <th>Reported By</th>
+                                <td><t t-esc="doc.reported_by.name"/></td>
+                                <th>Date Occurred</th>
+                                <td><t t-esc="doc.date_occurred"/></td>
+                            </tr>
+                            <tr>
+                                <th>Injuries</th>
+                                <td><t t-esc="doc.injuries and 'Yes' or 'No'"/></td>
+                                <th>Property Damage</th>
+                                <td><t t-esc="doc.property_damage and 'Yes' or 'No'"/></td>
+                            </tr>
+                            <tr>
+                                <th>Police Report</th>
+                                <td><t t-esc="doc.police_report and 'Yes' or 'No'"/></td>
+                                <th>Police Report No</th>
+                                <td><t t-esc="doc.police_report_no or '-'"/></td>
+                            </tr>
+                        </table>
+                        <h5>Description</h5>
+                        <p><t t-esc="doc.description"/></p>
+                        <h5>Action Taken</h5>
+                        <p><t t-esc="doc.action_taken or '-'"/></p>
+                        <h5>Resolution</h5>
+                        <p><t t-esc="doc.resolution or '-'"/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
