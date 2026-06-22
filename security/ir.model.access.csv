@@ -5,12 +5,16 @@ access_security_guard_ceo,security.guard ceo,model_security_guard,group_security
 access_security_guard_user,security.guard user,model_security_guard,group_security_guard,1,0,0,0
 access_security_client_manager,security.client manager,model_security_client,group_security_manager,1,1,1,0
 access_security_client_hr,security.client hr,model_security_client,group_security_hr,1,1,1,1
+access_security_client_ceo,security.client ceo,model_security_client,group_security_ceo,1,1,1,1
 access_security_site_manager,security.site manager,model_security_site,group_security_manager,1,1,1,0
 access_security_site_hr,security.site hr,model_security_site,group_security_hr,1,1,1,1
+access_security_site_ceo,security.site ceo,model_security_site,group_security_ceo,1,1,1,1
 access_security_vacancy_hr,security.vacancy hr,model_security_vacancy,group_security_hr,1,1,1,1
 access_security_vacancy_manager,security.vacancy manager,model_security_vacancy,group_security_manager,1,1,0,0
+access_security_vacancy_ceo,security.vacancy ceo,model_security_vacancy,group_security_ceo,1,1,1,1
 access_security_applicant_hr,security.applicant hr,model_security_applicant,group_security_hr,1,1,1,1
 access_security_applicant_manager,security.applicant manager,model_security_applicant,group_security_manager,1,1,0,0
+access_security_applicant_ceo,security.applicant ceo,model_security_applicant,group_security_ceo,1,1,1,1
 access_employment_action_hr,security.employment hr,model_security_employment_action,group_security_hr,1,1,1,1
 access_employment_action_ceo,security.employment ceo,model_security_employment_action,group_security_ceo,1,1,1,1
 access_hire_wizard_hr,hire.wizard hr,model_hire_wizard,group_security_hr,1,1,1,1
@@ -30,6 +34,7 @@ access_security_attendance_guard,security.attendance guard,model_security_attend
 access_security_patrol_manager,security.patrol manager,model_security_patrol_log,group_security_manager,1,1,1,0
 access_security_patrol_guard,security.patrol guard,model_security_patrol_log,group_security_guard,1,1,1,0
 access_security_patrol_hr,security.patrol hr,model_security_patrol_log,group_security_hr,1,1,1,1
+access_security_patrol_ceo,security.patrol ceo,model_security_patrol_log,group_security_ceo,1,1,1,1
 access_security_incident_guard,security.incident guard,model_security_incident,group_security_guard,1,1,1,0
 access_security_incident_manager,security.incident manager,model_security_incident,group_security_manager,1,1,1,0
 access_security_incident_hr,security.incident hr,model_security_incident,group_security_hr,1,1,1,1
@@ -40,5 +45,6 @@ access_security_complaint_hr,security.complaint hr,model_security_complaint,grou
 access_security_complaint_ceo,security.complaint ceo,model_security_complaint,group_security_ceo,1,1,1,1
 access_security_payslip_hr,security.payslip hr,model_security_payslip,group_security_hr,1,1,1,1
 access_security_payslip_ceo,security.payslip ceo,model_security_payslip,group_security_ceo,1,1,1,1
+access_security_payslip_accounts,security.payslip accounts,model_security_payslip,group_security_accounts,1,1,1,0
 access_security_payslip_manager,security.payslip manager,model_security_payslip,group_security_manager,1,0,0,0
 access_security_payslip_guard,security.payslip guard,model_security_payslip,group_security_guard,1,0,0,0
