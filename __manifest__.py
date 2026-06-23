@@ -40,6 +40,15 @@
         'report/shift_report.xml',
         'report/incident_report.xml',
     ],
+    'demo': [
+        'data/demo.xml',
+    ],
+    'test': [
+        'tests/test_guard.py',
+        'tests/test_shift.py',
+        'tests/test_complaint.py',
+        'tests/test_payslip.py',
+    ],
     'installable': True,
     'application': True,
     'license': 'LGPL-3',

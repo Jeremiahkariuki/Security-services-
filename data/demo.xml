@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Demo Clients -->
+        <record id="demo_client_1" model="security.client">
+            <field name="name">Safaricom PLC</field>
+            <field name="contact_person">James Mwangi</field>
+            <field name="phone">0722000000</field>
+            <field name="email">security@safaricom.co.ke</field>
+            <field name="address">Safaricom House, Westlands, Nairobi</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="demo_client_2" model="security.client">
+            <field name="name">KCB Bank Kenya</field>
+            <field name="contact_person">Mary Wanjiku</field>
+            <field name="phone">0711087000</field>
+            <field name="email">security@kcbgroup.com</field>
+            <field name="address">Kencom House, Nairobi CBD</field>
+            <field name="status">active</field>
+        </record>
+
+        <!-- Demo Sites -->
+        <record id="demo_site_1" model="security.site">
+            <field name="name">Safaricom Westlands HQ</field>
+            <field name="client_id" ref="demo_client_1"/>
+            <field name="location">Westlands, Nairobi</field>
+            <field name="risk_level">high</field>
+            <field name="required_guards">4</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="demo_site_2" model="security.site">
+            <field name="name">KCB Kencom Branch</field>
+            <field name="client_id" ref="demo_client_2"/>
+            <field name="location">Nairobi CBD</field>
+            <field name="risk_level">critical</field>
+            <field name="required_guards">6</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="demo_site_3" model="security.site">
+            <field name="name">Safaricom Mombasa Road</field>
+            <field name="client_id" ref="demo_client_1"/>
+            <field name="location">Mombasa Road, Nairobi</field>
+            <field name="risk_level">medium</field>
+            <field name="required_guards">3</field>
+            <field name="status">active</field>
+        </record>
+
+        <!-- Demo Guards -->
+        <record id="demo_guard_1" model="security.guard">
+            <field name="name">John Kamau</field>
+            <field name="id_number">12345678</field>
+            <field name="phone">0712345678</field>
+            <field name="email">john.kamau@guard.com</field>
+            <field name="gender">male</field>
+            <field name="contract_start">2026-01-01</field>
+            <field name="contract_end">2026-12-31</field>
+            <field name="basic_salary">35000</field>
+            <field name="house_allowance">7000</field>
+            <field name="transport_allowance">3000</field>
+            <field name="site_id" ref="demo_site_1"/>
+            <field name="status">active</field>
+        </record>
+
+        <record id="demo_guard_2" model="security.guard">
+            <field name="name">Mary Njeri</field>
+            <field name="id_number">23456789</field>
+            <field name="phone">0723456789</field>
+            <field name="email">mary.njeri@guard.com</field>
+            <field name="gender">female</field>
+            <field name="contract_start">2026-02-01</field>
+            <field name="contract_end">2027-01-31</field>
+            <field name="basic_salary">32000</field>
+            <field name="house_allowance">6000</field>
+            <field name="transport_allowance">3000</field>
+            <field name="site_id" ref="demo_site_1"/>
+            <field name="status">active</field>
+        </record>
+
+        <record id="demo_guard_3" model="security.guard">
+            <field name="name">Peter Ochieng</field>
+            <field name="id_number">34567890</field>
+            <field name="phone">0734567890</field>
+            <field name="email">peter.ochieng@guard.com</field>
+            <field name="gender">male</field>
+            <field name="contract_start">2026-01-15</field>
+            <field name="contract_end">2026-12-31</field>
+            <field name="basic_salary">30000</field>
+            <field name="house_allowance">5000</field>
+            <field name="transport_allowance">3000</field>
+            <field name="site_id" ref="demo_site_2"/>
+            <field name="status">active</field>
+        </record>
+
+        <record id="demo_guard_4" model="security.guard">
+            <field name="name">Grace Wambua</field>
+            <field name="id_number">45678901</field>
+            <field name="phone">0745678901</field>
+            <field name="email">grace.wambua@guard.com</field>
+            <field name="gender">female</field>
+            <field name="contract_start">2026-03-01</field>
+            <field name="contract_end">2027-02-28</field>
+            <field name="basic_salary">28000</field>
+            <field name="house_allowance">5000</field>
+            <field name="transport_allowance">2000</field>
+            <field name="site_id" ref="demo_site_3"/>
+            <field name="status">active</field>
+        </record>
+
+        <record id="demo_guard_5" model="security.guard">
+            <field name="name">David Mutua</field>
+            <field name="id_number">56789012</field>
+            <field name="phone">0756789012</field>
+            <field name="email">david.mutua@guard.com</field>
+            <field name="gender">male</field>
+            <field name="contract_start">2026-01-01</field>
+            <field name="contract_end">2026-12-31</field>
+            <field name="basic_salary">40000</field>
+            <field name="house_allowance">8000</field>
+            <field name="transport_allowance">4000</field>
+            <field name="site_id" ref="demo_site_2"/>
+            <field name="status">active</field>
+        </record>
+
+    </data>
+</odoo>
